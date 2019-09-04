@@ -41,29 +41,14 @@ public class UniformHomePage {
 	@FindBy(xpath="//*[@class='img-responsive' and @alt='banner1']")
 	private WebElement banner; 
 	
-	@FindBy(xpath="//*[@title='REGULAR T-SHIRTS (YELLOW)']")
+	@FindBy(xpath="//*[@title='REGULAR T-SHIRTS (YELLOW)'] and @class='img-responsive']")
 	private WebElement regularYellow; 
 	
-	@FindBy(xpath="//*[@title='REGULAR T-SHIRTS (Rust)']")
+	@FindBy(xpath="//*[@title='REGULAR T-SHIRTS (Rust)' and @class='img-responsive']")
 	private WebElement regularRust;
 	
-	@FindBy(xpath="//*[@title='REGULAR T-SHIRTS (Maroon)']")
+	@FindBy(xpath="//*[@title='Regular T-Shirt (Maroon)']")
 	private WebElement regularMaroon;	
-	
-	public void clickAnItem(String color) throws InterruptedException {
-		this.selectedItem=color;
-		Thread.sleep(3000);
-		if(selectedItem.equals("REGULAR T-SHIRTS (YELLOW)")){
-			this.regularYellow.click();
-			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (YELLOW)");
-		}else if(selectedItem.equals("REGULAR T-SHIRTS (Rust)")){
-			this.regularRust.click();
-			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (Rust)");
-		}else if(selectedItem.equals("REGULAR T-SHIRTS (Maroon)")){
-			this.regularMaroon.click();
-			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (Maroon)");
-		}
-	}		
 
 	public void clickBanner() {
 		this.banner.click();
@@ -129,5 +114,22 @@ public class UniformHomePage {
 			logger.log(LogStatus.FAIL, "Verify Order Screen displayed");
 			throw new Throwable(t);
 		}	
-	}		
+	}	
+	
+	public void clickAnItem(String color) throws InterruptedException {
+		this.selectedItem=color;
+		if(this.selectedItem.equals("REGULAR T-SHIRTS (YELLOW)")){
+			wait.until(ExpectedConditions.elementToBeClickable(regularYellow));
+			this.regularYellow.click();
+			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (YELLOW)");
+		}else if(this.selectedItem.equals("REGULAR T-SHIRTS (Rust)")){
+			wait.until(ExpectedConditions.elementToBeClickable(regularRust));
+			this.regularRust.click();
+			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (Rust)");
+		}else if(this.selectedItem.equals("REGULAR T-SHIRTS (Maroon)")){
+			wait.until(ExpectedConditions.elementToBeClickable(regularMaroon));
+			this.regularMaroon.click();
+			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (Maroon)");
+		}
+	}			
 }

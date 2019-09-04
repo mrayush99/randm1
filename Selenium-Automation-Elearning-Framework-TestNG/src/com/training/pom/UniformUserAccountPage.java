@@ -25,6 +25,9 @@ public class UniformUserAccountPage {
 		PageFactory.initElements(driver, this);
 	}
 	
+	@FindBy(xpath="//a[contains(text(), 'Uniform Store')]")
+	private WebElement logo; 	
+	
 	@FindBy(xpath="//a[text()='Change your password']")	
 	private WebElement changePassword; 
 	
@@ -37,6 +40,12 @@ public class UniformUserAccountPage {
 	public void clickChangePassword() {
 		this.changePassword.click(); 
 		logger.log(LogStatus.PASS, "Click Change Password Link");
+	}
+	
+	public void clickLogo() throws InterruptedException {
+		Thread.sleep(3000);
+		this.logo.click(); 
+		logger.log(LogStatus.PASS, "Click Uniform Store Logo");
 	}		
 
 	public void verifyLoginIsSuccessful() throws Exception {

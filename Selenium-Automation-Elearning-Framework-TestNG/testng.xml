@@ -4,7 +4,7 @@
   <test name="Test">
     <classes>
       <!--<class name="com.training.functional.tests.UniformStoreLoginTestSuite"/>-->
-      <class name="com.training.functional.tests.UniformStoreCheckoutTestSuite"/>
+      <class name="com.training.functional.tests.UniformStoreOrderingTestSuite"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
