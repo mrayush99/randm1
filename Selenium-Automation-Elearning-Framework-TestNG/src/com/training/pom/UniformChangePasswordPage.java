@@ -32,7 +32,7 @@ public class UniformChangePasswordPage {
 	private WebElement confirmPassword; 
 
 	@FindBy(xpath="//*[@type='submit' and @value='Continue']")
-	private WebElement contine; 
+	private WebElement continueButton; 
 
 	public void typePassword(String pass) {
 		this.password.clear();
@@ -47,7 +47,7 @@ public class UniformChangePasswordPage {
 	}	
 
 	public void clickContinue() {
-		this.contine.click(); 
+		this.continueButton.click(); 
 		logger.log(LogStatus.PASS, "Click Continue  button");
 	}
 

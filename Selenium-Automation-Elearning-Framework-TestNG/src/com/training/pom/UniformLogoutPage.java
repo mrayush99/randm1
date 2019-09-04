@@ -13,10 +13,10 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.trianing.waits.WaitTypes;
 
 public class UniformLogoutPage {
+	
 	private WebDriver driver; 
 	private WaitTypes wt;
 	private WebDriverWait wait;
-	private String logoffMessage="You have been logged off your account. It is now safe to leave the computer.";
 	ExtentTest logger;
 	
 	public UniformLogoutPage(WebDriver driver, ExtentTest logger) {
@@ -49,9 +49,9 @@ public class UniformLogoutPage {
 	}	
 		
 	public void verifyLogoutSuccessful() throws Exception {
-		
-		String actual;
-		String expected=logoffMessage;
+
+		String expected="You have been logged off your account. It is now safe to leave the computer.";
+		String actual;		
 		try{
 			wait.until(ExpectedConditions.visibilityOf(logoutMessage));
 			actual=logoutMessage.getText();

@@ -1,16 +1,10 @@
 package com.training.pom;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -19,15 +13,12 @@ import com.trianing.waits.WaitTypes;
 public class UniformStoreCheckoutPage {
 
 	private WebDriver driver; 
-	private WebDriverWait wait;
-	private String title="My Account";
 	private WaitTypes wt;
 	ExtentTest logger;	
 		
 	public UniformStoreCheckoutPage(WebDriver driver, ExtentTest logger) {
 		this.driver = driver; 
 		this.logger=logger;
-		this.wait= new WebDriverWait(driver, 5);
 		PageFactory.initElements(driver, this);
 	}
 	

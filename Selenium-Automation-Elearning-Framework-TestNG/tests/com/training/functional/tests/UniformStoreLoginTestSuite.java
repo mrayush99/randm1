@@ -15,20 +15,23 @@ import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import com.training.dataproviders.LoginDataProviders;
 import com.training.generics.ScreenShot;
 import com.training.pom.UniformChangePasswordPage;
 import com.training.pom.UniformHomePage;
 import com.training.pom.UniformLoginPage;
 import com.training.pom.UniformLogoutPage;
+import com.training.pom.UniformOrderPage;
 import com.training.pom.UniformRegistrationPage;
 import com.training.pom.UniformRegistrationSuccessPage;
+import com.training.pom.UniformShoppingCartPage;
+import com.training.pom.UniformStoreCheckoutPage;
+import com.training.pom.UniformStoreCheckoutSuccessPage;
 import com.training.pom.UniformUserAccountPage;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
 import com.training.utility.ExtentLogger;
 
-public class UniformStoreLoginTestSuite extends LoginDataProviders {
+public class UniformStoreLoginTestSuite{
 	private WebDriver driver;
 	private static String baseUrl;
 	private static String timeOut;
@@ -39,20 +42,18 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 	private UniformLoginPage loginPage;
 	private UniformUserAccountPage accountPage;
 	private UniformChangePasswordPage changePasswordPage;
+	private UniformOrderPage orderPage;
+	private UniformShoppingCartPage cartPage;
+	private UniformStoreCheckoutPage checkoutPage;
+	private UniformStoreCheckoutSuccessPage checkoutSuccessPage;	
 	private static Properties properties;
 	private ScreenShot screenShot;
 	private ExtentLogger eLog= new ExtentLogger();
 	private ExtentTest logger;
 	
 	//==============change the below inputs for each run======================
-	private String firstName="First51";
-	private String lastName="Last51";
-	private String emailId="email51@gmail.com";
-	private String phoneNumber="9890989751";	
-	private String password="Pass51";
-	private String cpassword="Pass51";
-	private String oldPassword="Pass51";
-	private String newPassword="Pass52";
+	private String user="email57@gmail.com";
+	private String password="Pass57";
 	//==============Inputs Ends Here======================	
 	
 	@BeforeClass
@@ -85,13 +86,18 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		screenShot = new ScreenShot(driver);
 		
 		//Initializing the Pages
+
 		homePage = new UniformHomePage(driver, logger);
+		loginPage = new UniformLoginPage(driver, logger);
 		registrationPage = new UniformRegistrationPage(driver, logger);
 		registrationSuccessPage = new UniformRegistrationSuccessPage(driver, logger);
+		changePasswordPage=new UniformChangePasswordPage(driver, logger);		
 		accountPage=new UniformUserAccountPage(driver, logger);
+		orderPage = new UniformOrderPage(driver, logger);
+		cartPage = new UniformShoppingCartPage(driver, logger);
+		checkoutPage = new UniformStoreCheckoutPage(driver, logger);
+		checkoutSuccessPage = new UniformStoreCheckoutSuccessPage(driver, logger);
 		logoutpage = new UniformLogoutPage(driver, logger);
-		loginPage=new UniformLoginPage(driver, logger);
-		changePasswordPage=new UniformChangePasswordPage(driver, logger);
 		
 		//Launch the Application
 		logger.log(LogStatus.PASS, "Launch Application URL " + baseUrl);
@@ -104,6 +110,9 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		//Testcase to Execute New User Registration Test
 
 		//Initialise the variables
+		String firstName="First55";
+		String lastName="Last55";
+		String phoneNumber="9890989754";	
 		String faxNumber="9890989771";
 		String companyName="IBM";
 		String address1="DLF";
@@ -125,7 +134,7 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		//Fill up the Registration Form with various inputs
 		registrationPage.typeFirstName(firstName);
 		registrationPage.typeLastName(lastName);
-		registrationPage.typeEmail(emailId);
+		registrationPage.typeEmail(user);
 		registrationPage.typeTelephone(phoneNumber);
 		registrationPage.typeFax(faxNumber);
 		registrationPage.typeCompany(companyName);
@@ -136,7 +145,7 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		registrationPage.selectCountry(countryName);
 		registrationPage.selctZone(zoneName);
 		registrationPage.typePassword(password);
-		registrationPage.typeConfirmPassword(cpassword);
+		registrationPage.typeConfirmPassword(password);
 		registrationPage.subscribeNewsletter(subscribe);
 		registrationPage.checkAgree();
 
@@ -154,10 +163,11 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		logger.log(LogStatus.PASS, "Take Screen Shot of Successful Registration");
 	}
 	
-	@Test(priority=2, enabled=true, dataProvider="login", dataProviderClass=LoginDataProviders.class)
-	public void UFM_002(Method method, String user, String password) throws Exception {		
+	@Test(priority=2, enabled=true)
+	public void UFM_002(Method method) throws Exception {	
+		
 		//Testcase to Verify Successful User Login
-
+		
 		//Verify Uniform Store homepage is launched and exit test if not opened
 		homePage.verifyHomePageLaunched();
 		homePage.clickAccount();
@@ -183,9 +193,11 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		logger.log(LogStatus.PASS, "Take Screen Shot of Successful Login");		
 	}
 	
-	@Test(priority=3, enabled=true, dataProvider="changePassword", dataProviderClass=LoginDataProviders.class)
-	public void UFM_003(Method method, String user, String password, String newPassword) throws Exception {		
+	@Test(priority=3, enabled=true)
+	public void UFM_003(Method method) throws Exception {		
 		//Testcase to Execute Change Password Test
+
+		String newPassword="Pass55";
 
 		//Verify Uniform Store homepage is launched and exit test if not opened
 		homePage.verifyHomePageLaunched();
@@ -219,10 +231,10 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		logger.log(LogStatus.PASS, "Take Screen Shot of password change");			
 	}
 	
-	@Test(priority=4, dataProvider="login", dataProviderClass=LoginDataProviders.class, enabled=true)
-	public void UFM_004(Method method, String user, String password, String comment) throws Throwable {		
+	@Test(priority=4, enabled=true)
+	public void UFM_004(Method method) throws Throwable {		
 		//Testcase to Execute Invalid login Test
-		logger.log(LogStatus.INFO, method.getName() + " : Scenario : " + comment);
+		String invalidpassword="Pass53";
 
 		//Verify Uniform Store homepage is launched and exit test if not opened
 		homePage.verifyHomePageLaunched();
@@ -234,7 +246,7 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		
 		//Verify Fill up Login Form and login
 		loginPage.typeUser(user);
-		loginPage.typePassword(password);
+		loginPage.typePassword(invalidpassword);
 		
 		//Verify Entered User and Password and click Login
 		loginPage.verifyEnteredUser();	
@@ -249,13 +261,108 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 		logger.log(LogStatus.PASS, "Take Screen Shot of Login Failure");			
 	}	
 	
+	@Test(priority=5 , enabled=true)
+	public void UFM_005(Method method) throws Throwable {	
+		
+		//Testcase to Order a product without login
+		
+		//Verify Uniform Store homepage is launched and exit test if not opened
+		homePage.verifyHomePageLaunched();
+		
+		//Select an Item as per the argument
+		homePage.clickAnItem("REGULAR T-SHIRTS (Rust)");
+		
+		//Verify Order page is displayed and select chest size
+		orderPage.verifyOrderScreenDisplayed("REGULAR T-SHIRTS (Rust)");
+		orderPage.selectChestSize("38");
+		
+		//Add the selected product onto cart
+		orderPage.clickAddToCart();
+		
+		//View the cart and proceed to checkout
+		orderPage.clickCart();
+		orderPage.clickViewCart();
+		cartPage.verifyShoppingCartDisplayed();
+		cartPage.clickCheckout();
+		
+		//Verify that the loginpage is displayed as user didnt loggedin before shopping
+		loginPage.verifyLoginPageLaunched();
+		
+		screenShot.captureScreenShot(method.getName());
+		logger.log(LogStatus.PASS, "Take Screen Shot of login page");	
+	}
+	
+	@Test(priority=6 , enabled=true)
+	public void UFM_006(Method method) throws Throwable {	
+		
+		//Testcase to Verify Successful Placement of an Order after pre login
+		
+		String user="email54@gmail.com";
+		String password="Pass55";
+
+		//Verify Uniform Store homepage is launched and exit test if not opened
+		homePage.verifyHomePageLaunched();
+		homePage.clickAccount();
+		homePage.clicklogin();	
+		
+		//Verify login Page is launched
+		loginPage.verifyLoginPageLaunched();
+		
+		//Verify Fill up Login Form and login
+		loginPage.typeUser(user);
+		loginPage.typePassword(password);
+		
+		//Verify Entered User and Password and click Login
+		loginPage.verifyEnteredUser();	
+		loginPage.verifyEnteredPassword();
+		loginPage.clickLogin();
+		
+		//Verify login is Successful
+		accountPage.verifyLoginIsSuccessful();
+		accountPage.clickLogo();
+		
+		//Verify Uniform Store homepage is launched and exit test if not opened
+		homePage.verifyHomePageLaunched();	
+		
+		//Select an Item as per the argument
+		homePage.clickAnItem("REGULAR T-SHIRTS (Rust)");
+		
+		//Verify Order page is displayed and select chest size
+		orderPage.verifyOrderScreenDisplayed("REGULAR T-SHIRTS (Rust)");
+		orderPage.selectChestSize("38");
+		
+		//Add the selected product onto cart
+		orderPage.clickAddToCart();
+		
+		//View the cart and proceed to checkout
+		orderPage.clickCart();
+		orderPage.clickViewCart();
+		cartPage.verifyShoppingCartDisplayed();
+		cartPage.clickCheckout();
+		
+		//Confirm the Address, payment Method and place the order
+		checkoutPage.clickBillingAddressContinue();
+		checkoutPage.clickShippingAddressContinue();
+		checkoutPage.clickShippingMethodContinue();
+		checkoutPage.enterOrderComment();
+		checkoutPage.agreeTermsAndCondition();		
+		checkoutPage.clickPaymentMethodContinue();
+		checkoutPage.clickConfirmOrder();
+		
+		//Verify Order is placed Successfully
+		checkoutSuccessPage.verifyOrderSuccessPageDisplayed();
+		checkoutSuccessPage.verifyOrderPlaced();
+		
+		//Take Screenshot of successful placement of Order		
+		screenShot.captureScreenShot(method.getName());
+		logger.log(LogStatus.PASS, "Take Screen Shot of Order Success page");	
+	}	
+	
 	@AfterMethod
 	public void logout() throws InterruptedException {
 		//Log out of Application
 		try {
-			Thread.sleep(10000);
 			logoutpage.clickLogout();
-			Thread.sleep(3000);
 			logoutpage.verifyLogoutSuccessful();
 			driver.quit();
 			logger.log(LogStatus.PASS, "Close Application");
@@ -270,7 +377,6 @@ public class UniformStoreLoginTestSuite extends LoginDataProviders {
 	@AfterTest
 	public void tearDown() throws Exception {
 		Thread.sleep(1000);
-		driver.quit();
 		eLog.generateReport();
-	}
+	}	
 }

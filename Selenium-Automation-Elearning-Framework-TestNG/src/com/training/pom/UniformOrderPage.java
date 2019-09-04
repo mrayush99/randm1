@@ -17,6 +17,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class UniformOrderPage {
+	
 	private WebDriver driver; 
 	private WebDriverWait wait;
 	ExtentTest logger;
@@ -82,20 +83,29 @@ public class UniformOrderPage {
 			String size=sizes.next().getText().trim();
 			if(size.contains(mySize)) {
 				shirtSize.selectByVisibleText(size);
+				logger.log(LogStatus.PASS, "Select the Shirt Size");
 				flag=true;
 				break;
 			}
 		}
-		if(flag) {
-			logger.log(LogStatus.PASS, "Select the Shirt Size");
-		}else {
+		if(!flag) {
 			logger.log(LogStatus.FAIL, "Select the Shirt Size");
 		}
 	}
-	
-	public void verigyOrderPageDisplayed() {
-		logger.log(LogStatus.PASS, "Verify Order Page is Displayed");
-	}
+
+	public void verifyOrderScreenDisplayed(String color) throws Throwable {
+		String expected=color;
+		String actual;
+		try{
+			wait.until(ExpectedConditions.titleIs(expected));
+			actual=this.driver.getTitle();
+			Assert.assertEquals(actual, expected);
+			logger.log(LogStatus.PASS, "Verify Order Screen displayed : Order Screen displayed for : " + actual);
+		}catch(Throwable t) {
+			logger.log(LogStatus.FAIL, "Verify Order Screen displayed");
+			throw new Throwable(t);
+		}	
+	}	
 	
 	public void verifyItemAddedToCart() throws Throwable {
 		String expectedText="Success: You have added";
@@ -109,7 +119,7 @@ public class UniformOrderPage {
 			Assert.assertEquals(actual, expected);
 			logger.log(LogStatus.PASS, "Verify Item added to Cart : Item Added with Message : " + actualText);
 		}catch(Throwable t) {
-			logger.log(LogStatus.FAIL, "Verify Login is Failed");
+			logger.log(LogStatus.FAIL, "Verify Item added to Cart");
 			throw new Throwable(t);
 		}	
 	}	

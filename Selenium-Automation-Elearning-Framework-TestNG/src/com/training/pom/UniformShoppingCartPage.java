@@ -28,8 +28,8 @@ public class UniformShoppingCartPage {
 	private WebElement checkoutButton; 
 	
 	public void clickCheckout() throws InterruptedException {
+		wait.until(ExpectedConditions.elementToBeClickable(this.checkoutButton));
 		this.checkoutButton.click();
-		Thread.sleep(2000);
 		logger.log(LogStatus.PASS, "Click Checkout Button");
 	}	
 	

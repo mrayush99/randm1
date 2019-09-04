@@ -10,17 +10,14 @@ import org.testng.Assert;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import com.training.utility.ExtentLogger;
 import com.trianing.waits.WaitTypes;
 
 public class UniformHomePage {
 
 	private WebDriver driver; 
-	private String title="Uniform Store";
 	private WaitTypes wt;
 	private WebDriverWait wait;
 	ExtentTest logger;
-	private String selectedItem;
 		
 	public UniformHomePage(WebDriver driver, ExtentTest logger) {
 		this.driver = driver; 
@@ -73,7 +70,7 @@ public class UniformHomePage {
 	}	
 
 	public void verifyHomePageLaunched() throws Exception {
-		WaitTypes wt = new WaitTypes(this.driver);
+		this.wt = new WaitTypes(this.driver);
 		boolean expected=true;
 		boolean actual;
 		try{
@@ -88,7 +85,7 @@ public class UniformHomePage {
 	}	
 	
 	public void verifyBannerDisplayed() throws Exception {
-		WaitTypes wt = new WaitTypes(this.driver);
+		this.wt = new WaitTypes(this.driver);
 		boolean expected=true;
 		boolean actual;
 		try{
@@ -100,33 +97,18 @@ public class UniformHomePage {
 			logger.log(LogStatus.FAIL, "Verify Banner is Displayed");
 			throw new Exception(e);
 		}
-	}	
+	}		
 	
-	public void verifyOrderScreenDisplayed() throws Throwable {
-		String expected=this.selectedItem;
-		String actual;
-		try{
-			wait.until(ExpectedConditions.titleIs(expected));
-			actual=this.driver.getTitle();
-			Assert.assertEquals(actual, expected);
-			logger.log(LogStatus.PASS, "Verify Order Screen displayed : Order Screen displayed for : " + actual);
-		}catch(Throwable t) {
-			logger.log(LogStatus.FAIL, "Verify Order Screen displayed");
-			throw new Throwable(t);
-		}	
-	}	
-	
-	public void clickAnItem(String color) throws InterruptedException {
-		this.selectedItem=color;
-		if(this.selectedItem.equals("REGULAR T-SHIRTS (YELLOW)")){
+	public void clickAnItem(String selectedItem) throws InterruptedException {
+		if(selectedItem.equals("REGULAR T-SHIRTS (YELLOW)")){
 			wait.until(ExpectedConditions.elementToBeClickable(regularYellow));
 			this.regularYellow.click();
 			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (YELLOW)");
-		}else if(this.selectedItem.equals("REGULAR T-SHIRTS (Rust)")){
+		}else if(selectedItem.equals("REGULAR T-SHIRTS (Rust)")){
 			wait.until(ExpectedConditions.elementToBeClickable(regularRust));
 			this.regularRust.click();
 			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (Rust)");
-		}else if(this.selectedItem.equals("REGULAR T-SHIRTS (Maroon)")){
+		}else if(selectedItem.equals("REGULAR T-SHIRTS (Maroon)")){
 			wait.until(ExpectedConditions.elementToBeClickable(regularMaroon));
 			this.regularMaroon.click();
 			logger.log(LogStatus.PASS, "Select REGULAR T-SHIRTS (Maroon)");

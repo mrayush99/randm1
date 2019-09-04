@@ -34,7 +34,6 @@ public class UniformStoreCheckoutSuccessPage {
 		try{
 			wait.until(ExpectedConditions.visibilityOf(orderPlaced));
 			actual=orderPlaced.getText();
-			logger.log(LogStatus.INFO, "Verify Order placed : " + actual);
 			Assert.assertEquals(actual, expected.toUpperCase());
 			logger.log(LogStatus.PASS, "Verify Order placed : " + actual);
 		}catch(Throwable t) {

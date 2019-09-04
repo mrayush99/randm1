@@ -15,7 +15,6 @@ public class UniformLoginPage {
 
 	private WebDriver driver; 
 	private WebDriverWait wait;
-	private String title="Account Login";
 	ExtentTest logger;
 	
 	public UniformLoginPage(WebDriver driver, ExtentTest logger) {
