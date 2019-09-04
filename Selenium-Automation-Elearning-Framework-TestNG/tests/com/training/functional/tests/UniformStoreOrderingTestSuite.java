@@ -46,7 +46,7 @@ public class UniformStoreOrderingTestSuite extends TestBase {
 		
 		//Starting the Extent Reporter
 		logger =eLog.startLogging(method.getName());
-		logger.log(LogStatus.INFO, method.getName() + " : Executing " + testDesc);
+		logger.log(LogStatus.INFO, method.getName() + " : Executing " + testDesc );
 		
 		//Initializing the Driver
 		driver = DriverFactory.getDriver(DriverNames.CHROME);
