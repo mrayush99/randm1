@@ -1,40 +1,29 @@
 package com.training.functional.tests;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.lang.reflect.Method;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.training.generics.ScreenShot;
 import com.training.pom.UniformChangePasswordPage;
 import com.training.pom.UniformHomePage;
 import com.training.pom.UniformLoginPage;
 import com.training.pom.UniformLogoutPage;
-import com.training.pom.UniformOrderPage;
 import com.training.pom.UniformRegistrationPage;
 import com.training.pom.UniformRegistrationSuccessPage;
-import com.training.pom.UniformShoppingCartPage;
-import com.training.pom.UniformStoreCheckoutPage;
-import com.training.pom.UniformStoreCheckoutSuccessPage;
 import com.training.pom.UniformUserAccountPage;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
-import com.training.utility.ExtentLogger;
 
-public class UniformStoreLoginTestSuite{
-	private WebDriver driver;
-	private static String baseUrl;
-	private static String timeOut;
+public class UniformStoreLoginTestSuite extends TestBase{
+	
 	private UniformHomePage homePage;
 	private UniformRegistrationPage registrationPage;	
 	private UniformRegistrationSuccessPage registrationSuccessPage;
@@ -42,30 +31,15 @@ public class UniformStoreLoginTestSuite{
 	private UniformLoginPage loginPage;
 	private UniformUserAccountPage accountPage;
 	private UniformChangePasswordPage changePasswordPage;
-	private UniformOrderPage orderPage;
-	private UniformShoppingCartPage cartPage;
-	private UniformStoreCheckoutPage checkoutPage;
-	private UniformStoreCheckoutSuccessPage checkoutSuccessPage;	
-	private static Properties properties;
-	private ScreenShot screenShot;
-	private ExtentLogger eLog= new ExtentLogger();
-	private ExtentTest logger;
 	
 	//==============change the below inputs for each run======================
-	private String user="email57@gmail.com";
-	private String password="Pass57";
+	private String user="email62@gmail.com";
+	private String password="Pass62";		
 	//==============Inputs Ends Here======================	
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws IOException {	
-		//Loading the Properties file
-		properties = new Properties();
-		FileInputStream inStream = new FileInputStream("./resources/others.properties");
-		properties.load(inStream);
-		
-		//Get the base url from the property file
-		baseUrl = properties.getProperty("baseURL");
-		timeOut=properties.getProperty("implicitWait");		
+		//Loading the Properties file	
 	}
 
 	@BeforeMethod
@@ -93,10 +67,6 @@ public class UniformStoreLoginTestSuite{
 		registrationSuccessPage = new UniformRegistrationSuccessPage(driver, logger);
 		changePasswordPage=new UniformChangePasswordPage(driver, logger);		
 		accountPage=new UniformUserAccountPage(driver, logger);
-		orderPage = new UniformOrderPage(driver, logger);
-		cartPage = new UniformShoppingCartPage(driver, logger);
-		checkoutPage = new UniformStoreCheckoutPage(driver, logger);
-		checkoutSuccessPage = new UniformStoreCheckoutSuccessPage(driver, logger);
 		logoutpage = new UniformLogoutPage(driver, logger);
 		
 		//Launch the Application
@@ -196,7 +166,7 @@ public class UniformStoreLoginTestSuite{
 	@Test(priority=3, enabled=true)
 	public void UFM_003(Method method) throws Exception {		
 		//Testcase to Execute Change Password Test
-
+		
 		String newPassword="Pass55";
 
 		//Verify Uniform Store homepage is launched and exit test if not opened
@@ -234,6 +204,7 @@ public class UniformStoreLoginTestSuite{
 	@Test(priority=4, enabled=true)
 	public void UFM_004(Method method) throws Throwable {		
 		//Testcase to Execute Invalid login Test
+		
 		String invalidpassword="Pass53";
 
 		//Verify Uniform Store homepage is launched and exit test if not opened
@@ -261,6 +232,7 @@ public class UniformStoreLoginTestSuite{
 		logger.log(LogStatus.PASS, "Take Screen Shot of Login Failure");			
 	}	
 	
+/*	
 	@Test(priority=5 , enabled=true)
 	public void UFM_005(Method method) throws Throwable {	
 		
@@ -357,6 +329,7 @@ public class UniformStoreLoginTestSuite{
 		screenShot.captureScreenShot(method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of Order Success page");	
 	}	
+*/
 	
 	@AfterMethod
 	public void logout() throws InterruptedException {

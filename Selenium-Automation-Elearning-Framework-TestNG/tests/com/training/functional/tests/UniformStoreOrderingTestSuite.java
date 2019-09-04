@@ -1,21 +1,15 @@
 package com.training.functional.tests;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.lang.reflect.Method;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import com.training.dataproviders.LoginDataProviders;
 import com.training.generics.ScreenShot;
 import com.training.pom.UniformHomePage;
 import com.training.pom.UniformLoginPage;
@@ -27,12 +21,9 @@ import com.training.pom.UniformStoreCheckoutSuccessPage;
 import com.training.pom.UniformUserAccountPage;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
-import com.training.utility.ExtentLogger;
 
-public class UniformStoreOrderingTestSuite extends LoginDataProviders {
-	private WebDriver driver;
-	private static String baseUrl;
-	private static String timeOut;
+public class UniformStoreOrderingTestSuite extends TestBase {
+
 	private UniformHomePage homePage;
 	private UniformLoginPage loginPage;
 	private UniformOrderPage orderPage;
@@ -41,21 +32,10 @@ public class UniformStoreOrderingTestSuite extends LoginDataProviders {
 	private UniformStoreCheckoutSuccessPage checkoutSuccessPage;
 	private UniformUserAccountPage accountPage;
 	private UniformLogoutPage logoutpage;
-	private static Properties properties;
-	private ScreenShot screenShot;
-	private ExtentLogger eLog= new ExtentLogger();
-	private ExtentTest logger;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws IOException {	
-		//Loading the Properties file
-		properties = new Properties();
-		FileInputStream inStream = new FileInputStream("./resources/others.properties");
-		properties.load(inStream);
-		
-		//Get the base url from the property file
-		baseUrl = properties.getProperty("baseURL");
-		timeOut=properties.getProperty("implicitWait");		
+		//Loading the Properties file	
 	}
 
 	@BeforeMethod
@@ -90,7 +70,7 @@ public class UniformStoreOrderingTestSuite extends LoginDataProviders {
 		driver.get(baseUrl);
 	}
 	
-	@Test(priority=1 , enabled=false)
+	@Test(priority=5 , enabled=true)
 	public void UFM_005(Method method) throws Throwable {	
 		
 		//Testcase to Order a product without login
@@ -102,8 +82,8 @@ public class UniformStoreOrderingTestSuite extends LoginDataProviders {
 		homePage.clickAnItem("REGULAR T-SHIRTS (Rust)");
 		
 		//Verify Order page is displayed and select chest size
-		orderPage.verigyOrderPageDisplayed();
-		orderPage.selectChestSize("38");
+		orderPage.verifyOrderScreenDisplayed("REGULAR T-SHIRTS (Rust)");
+		orderPage.selectChestSize("40");
 		
 		//Add the selected product onto cart
 		orderPage.clickAddToCart();
@@ -121,13 +101,13 @@ public class UniformStoreOrderingTestSuite extends LoginDataProviders {
 		logger.log(LogStatus.PASS, "Take Screen Shot of login page");	
 	}
 	
-	@Test(priority=2 , enabled=true)
+	@Test(priority=6 , enabled=true)
 	public void UFM_006(Method method) throws Throwable {	
 		
-		//Testcase to Verify Successful User Login
+		//Testcase to Verify Successful Placement of an Order after pre login
 		
-		String user="email51@gmail.com";
-		String password="Pass52";
+		String user="email54@gmail.com";
+		String password="Pass55";
 
 		//Verify Uniform Store homepage is launched and exit test if not opened
 		homePage.verifyHomePageLaunched();
@@ -157,8 +137,8 @@ public class UniformStoreOrderingTestSuite extends LoginDataProviders {
 		homePage.clickAnItem("REGULAR T-SHIRTS (Rust)");
 		
 		//Verify Order page is displayed and select chest size
-		orderPage.verigyOrderPageDisplayed();
-		orderPage.selectChestSize("38");
+		orderPage.verifyOrderScreenDisplayed("REGULAR T-SHIRTS (Rust)");
+		orderPage.selectChestSize("40");
 		
 		//Add the selected product onto cart
 		orderPage.clickAddToCart();
@@ -168,26 +148,30 @@ public class UniformStoreOrderingTestSuite extends LoginDataProviders {
 		orderPage.clickViewCart();
 		cartPage.verifyShoppingCartDisplayed();
 		cartPage.clickCheckout();
+		
+		//Confirm the Address, payment Method and place the order
 		checkoutPage.clickBillingAddressContinue();
 		checkoutPage.clickShippingAddressContinue();
 		checkoutPage.clickShippingMethodContinue();
+		checkoutPage.enterOrderComment();
 		checkoutPage.agreeTermsAndCondition();		
 		checkoutPage.clickPaymentMethodContinue();
 		checkoutPage.clickConfirmOrder();
+		
+		//Verify Order is placed Successfully
 		checkoutSuccessPage.verifyOrderSuccessPageDisplayed();
 		checkoutSuccessPage.verifyOrderPlaced();
 		
-		//Take Screenshot of success Registration		
+		//Take Screenshot of successful placement of Order		
 		screenShot.captureScreenShot(method.getName());
-		logger.log(LogStatus.PASS, "Take Screen Shot of login page");	
+		logger.log(LogStatus.PASS, "Take Screen Shot of Order Success page");	
 	}	
+	
 	@AfterMethod
 	public void logout() throws InterruptedException {
 		//Log out of Application
 		try {
-			Thread.sleep(10000);
 			logoutpage.clickLogout();
-			Thread.sleep(3000);
 			logoutpage.verifyLogoutSuccessful();
 			driver.quit();
 			logger.log(LogStatus.PASS, "Close Application");
@@ -197,12 +181,5 @@ public class UniformStoreOrderingTestSuite extends LoginDataProviders {
 		}finally {
 			eLog.endLogging(logger);
 		}
-	}
-	
-	@AfterTest
-	public void tearDown() throws Exception {
-		Thread.sleep(1000);
-		driver.quit();
-		eLog.generateReport();
 	}
 }

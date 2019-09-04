@@ -83,12 +83,13 @@ public class UniformOrderPage {
 			String size=sizes.next().getText().trim();
 			if(size.contains(mySize)) {
 				shirtSize.selectByVisibleText(size);
-				logger.log(LogStatus.PASS, "Select the Shirt Size");
 				flag=true;
 				break;
 			}
 		}
-		if(!flag) {
+		if(flag) {
+			logger.log(LogStatus.PASS, "Select the Shirt Size");
+		}else {
 			logger.log(LogStatus.FAIL, "Select the Shirt Size");
 		}
 	}
