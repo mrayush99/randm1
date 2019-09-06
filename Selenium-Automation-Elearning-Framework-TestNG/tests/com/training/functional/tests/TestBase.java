@@ -17,11 +17,12 @@ public class TestBase {
 	
 	protected static final ExtentLogger eLog= new ExtentLogger();
 	protected static ExtentTest logger;
-	protected static String baseUrl;
-	protected static String timeOut;
-	protected static Properties properties;
 	protected static WebDriver driver;
 	protected static ScreenShot screenShot;
+	protected static Properties properties;
+	protected static String baseUrl;
+	protected static String timeOut;
+	protected static String screenshotFolder;
 	
     @BeforeSuite
     public void initBrowser() {
@@ -38,6 +39,7 @@ public class TestBase {
 		//Get the base url from the property file
 		baseUrl = properties.getProperty("baseURL");
 		timeOut=properties.getProperty("implicitWait");	
+		screenshotFolder=System.getProperty("user.dir") + properties.getProperty("screenshot.folder");
 	}
     
 	@AfterTest

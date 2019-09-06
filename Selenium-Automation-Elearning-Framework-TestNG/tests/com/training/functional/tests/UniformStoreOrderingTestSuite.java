@@ -97,7 +97,7 @@ public class UniformStoreOrderingTestSuite extends TestBase {
 		//Verify that the loginpage is displayed as user didnt loggedin before shopping
 		loginPage.verifyLoginPageLaunched();
 		
-		screenShot.captureScreenShot(method.getName());
+		screenShot.captureScreenShot(screenshotFolder + method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of login page");	
 	}
 	
@@ -163,7 +163,7 @@ public class UniformStoreOrderingTestSuite extends TestBase {
 		checkoutSuccessPage.verifyOrderPlaced();
 		
 		//Take Screenshot of successful placement of Order		
-		screenShot.captureScreenShot(method.getName());
+		screenShot.captureScreenShot(screenshotFolder + method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of Order Success page");	
 	}	
 	

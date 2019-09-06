@@ -58,7 +58,7 @@ public class ScreenShot {
 	
 	public void captureScreenShot(String fileName){
 		
-		String path =  "C:\\Users\\VINODHFRANCIS\\git\\SeleniumProjctes\\final-framework-testng\\test-output\\";
+		String path =  "C:\\Users\\VINODHFRANCIS\\git\\Selenium\\Selenium-Automation-Elearning-Framework-TestNG\\test-output\\";
 
 		GregorianCalendar calendar = new GregorianCalendar(); 
 		int date =  calendar.get(Calendar.DATE); 

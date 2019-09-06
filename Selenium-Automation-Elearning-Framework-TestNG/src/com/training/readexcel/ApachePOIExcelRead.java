@@ -92,19 +92,19 @@ public class ApachePOIExcelRead {
 		return list1;
 	}
 	
-	public  String[][] getExcelContent(String fileName, String sheetName) {
+	public String[][] getExcelContent(String fileName, String sheetName) {
 		int rowCount =0; 
 		String [][] list1 = null; 
 		
 		try {
-			System.out.println("File Name Got " + fileName);
+			//System.out.println("File Name Got " + fileName);
 			FileInputStream file = new FileInputStream(new File(fileName));
 
 			// Create Workbook instance holding reference to .xlsx file
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 
 			// Get first/desired sheet from the workbook
-			XSSFSheet sheet = workbook.getSheetAt(0);
+			XSSFSheet sheet = workbook.getSheet(sheetName);
 			
 			int rowTotal = sheet.getLastRowNum();
 
@@ -197,29 +197,15 @@ public class ApachePOIExcelRead {
 	}
 	
 	public static void main(String[] args) {
-		String fileName = "C:\\Users\\VINODHFRANCIS\\git\\SeleniumProjctes\\final-framework-testng\\resources\\UniformStoreTestSuite.xlsx";
-		
-		for(String [] temp : new ApachePOIExcelRead().getExcelContent(fileName)){
-			for(String  tt : temp){
-				System.out.println(tt);
-			}
-		}
-		
-		String[][] fullData = {{"TESTCASEID", "USER", "PASS", "DESC", "NEWPASS"},
-							   {"UN001", "u1", "p1", "login", "np1"},
-							   {"UN001", "u2", "p2", "login", "np2"},
-							   {"UN001", "u3", "p3", "login", "np3"},
-							   {"UN002", "u1", "p1", "login", "np1"},
-							   {"UN002", "u2", "p2", "login", "np2"}};
-		
-		String [] fields = {"USER", "PASS", "DESC"};
-		String testcase="UN001";
+		String fileName = "C:\\Users\\VINODHFRANCIS\\git\\Selenium\\Selenium-Automation-Elearning-Framework-TestNG\\resources\\UniformStoreTestSuite.xlsx";
+		String [] fields = {"USER_NAME", "PASSWORD"};
+		String testcase="UFM_002";
 		
 		ApachePOIExcelRead ap = new ApachePOIExcelRead();
-		Object[][] columnData=ap.getColumnData(fullData, fields, testcase);
-		for(int i=0; i<columnData.length; i++) {
-			System.out.println(columnData[i][0] + " " + columnData[i][1] + " " + columnData[i][2]);
+		String[][] columnData=ap.getExcelContent(fileName, "LoginSuite");
+		String [][] loginData = new ApachePOIExcelRead().getColumnData(columnData, fields, testcase);
+		for(int i=0; i<loginData.length; i++) {
+			System.out.println(loginData[i][0] + " " + loginData[i][1] );
 		}
-		
 	}
 }

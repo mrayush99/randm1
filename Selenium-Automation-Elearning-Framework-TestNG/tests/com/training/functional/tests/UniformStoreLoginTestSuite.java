@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
+import com.training.dataproviders.LoginDataProviders;
 import com.training.generics.ScreenShot;
 import com.training.pom.UniformChangePasswordPage;
 import com.training.pom.UniformHomePage;
@@ -33,8 +34,8 @@ public class UniformStoreLoginTestSuite extends TestBase{
 	private UniformChangePasswordPage changePasswordPage;
 	
 	//==============change the below inputs for each run======================
-	private String user="email62@gmail.com";
-	private String password="Pass62";		
+	private String user="email63@gmail.com";
+	private String password="Pass63";		
 	//==============Inputs Ends Here======================	
 	
 	@BeforeClass
@@ -74,7 +75,7 @@ public class UniformStoreLoginTestSuite extends TestBase{
 		driver.get(baseUrl);
 	}
 	
-	@Test(priority=1 , enabled=true)
+	@Test(priority=1 , enabled=false)
 	public void UFM_001(Method method) throws Exception {	
 		
 		//Testcase to Execute New User Registration Test
@@ -129,11 +130,11 @@ public class UniformStoreLoginTestSuite extends TestBase{
 		registrationSuccessPage.verifyRegistrationSuccessful();
 		
 		//Take Screenshot of success Registration
-		screenShot.captureScreenShot(method.getName());
+		screenShot.captureScreenShot(screenshotFolder + method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of Successful Registration");
 	}
 	
-	@Test(priority=2, enabled=true)
+	@Test(priority=1, enabled=true)
 	public void UFM_002(Method method) throws Exception {	
 		
 		//Testcase to Verify Successful User Login
@@ -159,11 +160,11 @@ public class UniformStoreLoginTestSuite extends TestBase{
 		accountPage.verifyLoginIsSuccessful();
 		
 		//Take Screenshot of success Registration
-		screenShot.captureScreenShot(method.getName());
+		screenShot.captureScreenShot(screenshotFolder + method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of Successful Login");		
 	}
 	
-	@Test(priority=3, enabled=true)
+	@Test(priority=3, enabled=false)
 	public void UFM_003(Method method) throws Exception {		
 		//Testcase to Execute Change Password Test
 		
@@ -197,11 +198,11 @@ public class UniformStoreLoginTestSuite extends TestBase{
 		accountPage.verifyPasswordChangedSuccessful();
 
 		//Take Screenshot of success password change
-		screenShot.captureScreenShot(method.getName());
+		screenShot.captureScreenShot(screenshotFolder + method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of password change");			
 	}
 	
-	@Test(priority=4, enabled=true)
+	@Test(priority=4, enabled=false)
 	public void UFM_004(Method method) throws Throwable {		
 		//Testcase to Execute Invalid login Test
 		
@@ -228,108 +229,9 @@ public class UniformStoreLoginTestSuite extends TestBase{
 		loginPage.verifyLoginFailed();
 
 		//Take Screenshot of success password change
-		screenShot.captureScreenShot(method.getName());
+		screenShot.captureScreenShot(screenshotFolder + method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of Login Failure");			
 	}	
-	
-/*	
-	@Test(priority=5 , enabled=true)
-	public void UFM_005(Method method) throws Throwable {	
-		
-		//Testcase to Order a product without login
-		
-		//Verify Uniform Store homepage is launched and exit test if not opened
-		homePage.verifyHomePageLaunched();
-		
-		//Select an Item as per the argument
-		homePage.clickAnItem("REGULAR T-SHIRTS (Rust)");
-		
-		//Verify Order page is displayed and select chest size
-		orderPage.verifyOrderScreenDisplayed("REGULAR T-SHIRTS (Rust)");
-		orderPage.selectChestSize("38");
-		
-		//Add the selected product onto cart
-		orderPage.clickAddToCart();
-		
-		//View the cart and proceed to checkout
-		orderPage.clickCart();
-		orderPage.clickViewCart();
-		cartPage.verifyShoppingCartDisplayed();
-		cartPage.clickCheckout();
-		
-		//Verify that the loginpage is displayed as user didnt loggedin before shopping
-		loginPage.verifyLoginPageLaunched();
-		
-		screenShot.captureScreenShot(method.getName());
-		logger.log(LogStatus.PASS, "Take Screen Shot of login page");	
-	}
-	
-	@Test(priority=6 , enabled=true)
-	public void UFM_006(Method method) throws Throwable {	
-		
-		//Testcase to Verify Successful Placement of an Order after pre login
-		
-		String user="email54@gmail.com";
-		String password="Pass55";
-
-		//Verify Uniform Store homepage is launched and exit test if not opened
-		homePage.verifyHomePageLaunched();
-		homePage.clickAccount();
-		homePage.clicklogin();	
-		
-		//Verify login Page is launched
-		loginPage.verifyLoginPageLaunched();
-		
-		//Verify Fill up Login Form and login
-		loginPage.typeUser(user);
-		loginPage.typePassword(password);
-		
-		//Verify Entered User and Password and click Login
-		loginPage.verifyEnteredUser();	
-		loginPage.verifyEnteredPassword();
-		loginPage.clickLogin();
-		
-		//Verify login is Successful
-		accountPage.verifyLoginIsSuccessful();
-		accountPage.clickLogo();
-		
-		//Verify Uniform Store homepage is launched and exit test if not opened
-		homePage.verifyHomePageLaunched();	
-		
-		//Select an Item as per the argument
-		homePage.clickAnItem("REGULAR T-SHIRTS (Rust)");
-		
-		//Verify Order page is displayed and select chest size
-		orderPage.verifyOrderScreenDisplayed("REGULAR T-SHIRTS (Rust)");
-		orderPage.selectChestSize("38");
-		
-		//Add the selected product onto cart
-		orderPage.clickAddToCart();
-		
-		//View the cart and proceed to checkout
-		orderPage.clickCart();
-		orderPage.clickViewCart();
-		cartPage.verifyShoppingCartDisplayed();
-		cartPage.clickCheckout();
-		
-		//Confirm the Address, payment Method and place the order
-		checkoutPage.clickBillingAddressContinue();
-		checkoutPage.clickShippingAddressContinue();
-		checkoutPage.clickShippingMethodContinue();
-		checkoutPage.enterOrderComment();
-		checkoutPage.agreeTermsAndCondition();		
-		checkoutPage.clickPaymentMethodContinue();
-		checkoutPage.clickConfirmOrder();
-		
-		//Verify Order is placed Successfully
-		checkoutSuccessPage.verifyOrderSuccessPageDisplayed();
-		checkoutSuccessPage.verifyOrderPlaced();
-		
-		//Take Screenshot of successful placement of Order		
-		screenShot.captureScreenShot(method.getName());
-		logger.log(LogStatus.PASS, "Take Screen Shot of Order Success page");	
-	}	
-*/
 	
 	@AfterMethod
 	public void logout() throws InterruptedException {

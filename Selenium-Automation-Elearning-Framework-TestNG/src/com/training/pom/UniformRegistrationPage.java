@@ -201,16 +201,31 @@ public class UniformRegistrationPage {
 		logger.log(LogStatus.PASS, "Entered Phone Number is : " + enteredPhone);
 	}		
 	
+	public void verifyEnteredCity() throws Exception {
+		String enteredPhone=this.telephone.getAttribute("value");
+		logger.log(LogStatus.PASS, "Entered Phone Number is : " + enteredPhone);
+	}	
+	
+	public void verifyEnteredCountry() throws Exception {
+		String enteredPhone=this.telephone.getAttribute("value");
+		logger.log(LogStatus.PASS, "Entered Phone Number is : " + enteredPhone);
+	}	
+	
+	public void verifyEnteredZone() throws Exception {
+		String enteredPhone=this.telephone.getAttribute("value");
+		logger.log(LogStatus.PASS, "Entered Phone Number is : " + enteredPhone);
+	}				
+	
 	public void verifyRegistrationPageLaunched() throws Exception {
-		String actual;
+		String actual = null;
 		String expected=title;
 		try{
 			wait.until(ExpectedConditions.visibilityOf(firstName));
 			actual =driver.getTitle();
 			Assert.assertEquals(expected, actual, "Verify Registion Form is Launched");
-			logger.log(LogStatus.PASS, "Verify Registion Form is Launched");
+			logger.log(LogStatus.PASS, "Verify Registion Form is Launched : Title is : " + actual);
 		}catch(Exception e) {
-			logger.log(LogStatus.FAIL, "Verify Registion Form is Launched");
+			logger.log(LogStatus.FAIL, "Verify Registion Form is Launched : Title is : " + actual);
 			throw new Exception(e);
 		}	
 	}	
