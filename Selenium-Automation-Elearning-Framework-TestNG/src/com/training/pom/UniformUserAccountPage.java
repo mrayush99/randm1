@@ -60,7 +60,7 @@ public class UniformUserAccountPage {
 			logger.log(LogStatus.FAIL, "Verify User is Logged in Successfully");
 			throw new Exception(e);
 		}
-	}
+	}	
 
 	public void verifyPasswordChangedSuccessful() throws Exception {
 		String expected=title;

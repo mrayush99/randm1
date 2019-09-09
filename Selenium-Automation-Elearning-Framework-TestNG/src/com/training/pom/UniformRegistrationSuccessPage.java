@@ -29,7 +29,7 @@ public class UniformRegistrationSuccessPage {
 	private WebElement successMessage; 
 	
 	@FindBy(xpath="//*[text()='Continue']")	
-	private WebElement continueBtn; 			
+	private WebElement continueBtn;
 	
 	public void verifyRegistrationSuccessful() throws Exception {
 		String actual;
@@ -43,5 +43,15 @@ public class UniformRegistrationSuccessPage {
 			logger.log(LogStatus.FAIL, "Verify User Registion is Successful");
 			throw new Exception(e);
 		}		
+	}
+	
+	public void verifyRegistrationNotSuccessful() throws Throwable {
+		try{
+			wait.until(ExpectedConditions.visibilityOf(successMessage));
+			logger.log(LogStatus.FAIL, "Verify User Registion is Not Successful");
+		}catch(Exception e) {
+			logger.log(LogStatus.PASS, "Verify User Registion is Not Successful");
+			throw new Exception(e);
+		}
 	}		
 }

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.testng.annotations.DataProvider;
 
 import com.training.bean.LoginBean;
+import com.training.bean.UserAccountBean;
 import com.training.dao.ELearningDAO;
 import com.training.readexcel.ApachePOIExcelRead;
 import com.training.readexcel.ReadExcel;
@@ -33,6 +34,36 @@ public class LoginDataProviders {
 		}
 		return result;
 	}
+	
+	@DataProvider(name = "user_account")
+	public static Object [][] getUniformUserData() {
+
+		List<UserAccountBean> list = new ELearningDAO().getUserAccount(); 
+		
+		Object[][] result = new Object[list.size()][]; 
+		int count = 0; 
+		for(UserAccountBean temp : list){
+			Object[]  obj = new Object[15]; 
+			obj[0] = temp.getFirstName();
+			obj[1] = temp.getLastName();
+			obj[2] = temp.getEmailId();
+			obj[3] = temp.getTelephoneNum();
+			obj[4] = temp.getFaxNum();
+			obj[5] = temp.getCompany();
+			obj[6] = temp.getAddress1();
+			obj[7] = temp.getAddress2();
+			obj[8] = temp.getCity();
+			obj[9] = temp.getPostCode();
+			obj[10] = temp.getCountry();
+			obj[11] = temp.getRegion();
+			obj[12] = temp.getPassword();
+			obj[13] = temp.getConfirmPassword();
+			obj[14] = temp.getSubscribe();
+			
+			result[count ++] = obj; 
+		}
+		return result;
+	}	
 	
 	@DataProvider(name = "excel-inputs")
 	public String[][] getExcelData(){
@@ -62,7 +93,7 @@ public class LoginDataProviders {
 	@DataProvider(name = "userRegistrationData")
 	public static Object[][] getRegistrationData(Method testMethod){
 		// ensure you will have the title as first line in the file 
-		String [] fields = {"First Name", "Last Name", "E-Mail", "Telephone", "Address 1", "Address 2", "City", "Postal Code", "Country", "Region", "Password", "Password Confirm"};
+		String [] fields = {"First Name", "Last Name", "E-Mail", "Telephone", "fax_num", "company", "Address 1", "Address 2", "City", "Postal Code", "Country", "Region", "Password", "Password Confirm", "subscribe"};
 		String fileName ="C:\\Users\\VINODHFRANCIS\\git\\Selenium\\Selenium-Automation-Elearning-Framework-TestNG\\resources\\UniformStoreTestSuite.xlsx";
 		String [][] fullData = new ApachePOIExcelRead().getExcelContent(fileName, "RegistrationSuite");
 		String [][] registrationData = new ApachePOIExcelRead().getColumnData(fullData, fields, testMethod.getName());

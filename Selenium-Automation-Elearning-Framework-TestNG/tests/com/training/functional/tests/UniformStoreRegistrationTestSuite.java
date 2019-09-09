@@ -63,13 +63,13 @@ public class UniformStoreRegistrationTestSuite extends TestBase{
 		logger.log(LogStatus.PASS, "Launch Application URL : " + baseUrl);
 		driver.get(baseUrl);
 	}
-	@Test(dataProvider="userRegistrationData", dataProviderClass=LoginDataProviders.class)
-	public void UNFTD_003(Method method, String firstName, String lastName, String emailId, String phoneNumber, String address1, String address2, String cityName, String postCode, String countryName, String region, String password, String cPassword) throws Exception {		  	
+	@Test(dataProvider="user_account", dataProviderClass=LoginDataProviders.class, enabled=false)
+	public void UNFTD_003(Method method, String firstName, String lastName, String emailId, String phoneNumber, String faxNumber, String company, String address1, String address2, String cityName, String postCode, String countryName, String region, String password, String cPassword, String subscribe) throws Exception {		  	
 		
 		//Testcase to Execute New User Registration Test
+		logger.log(LogStatus.INFO, "Executing Multiple Successful Registration from DB Data provider");
 		
 		//Initialise the variables
-		String subscribe="No";
 		String user=emailId;
 		
 		//Verify Uniform Store homepage is launched and exit test if not opened
@@ -113,6 +113,57 @@ public class UniformStoreRegistrationTestSuite extends TestBase{
 		screenShot.captureScreenShot(screenshotFolder + method.getName());
 		logger.log(LogStatus.PASS, "Take Screen Shot of Successful Registration");
 	}
+	
+	@Test(dataProvider="userRegistrationData", dataProviderClass=LoginDataProviders.class)
+	public void UNFTD_004(Method method, String firstName, String lastName, String emailId, String phoneNumber, String faxNumber, String company, String address1, String address2, String cityName, String postCode, String countryName, String region, String password, String cPassword, String subscribe) throws Throwable {		  	
+		
+		//Testcase to Execute New User Registration Test
+		logger.log(LogStatus.INFO, "Executing Multiple Invalid Registration from Excel Data provider");
+		
+		//Initialise the variables
+		String user=emailId;
+		
+		//Verify Uniform Store homepage is launched and exit test if not opened
+		homePage.verifyHomePageLaunched();
+		homePage.clickAccount();
+		homePage.clickregister();
+		
+		//Verify Uniform Store Registration Page is launched before Registration and exit if not
+		registrationPage.verifyRegistrationPageLaunched();
+	
+		//Fill up the Registration Form with various inputs
+		registrationPage.typeFirstName(firstName);
+		registrationPage.typeLastName(lastName);
+		registrationPage.typeEmail(user);
+		
+		registrationPage.typeTelephone(phoneNumber);
+		registrationPage.typeAddress1(address1);
+		registrationPage.typeAddress2(address2);
+		registrationPage.typeCity(cityName);
+		registrationPage.typePostcode(postCode);
+		registrationPage.selectCountry(countryName);
+		registrationPage.selctZone(region);
+		registrationPage.typePassword(password);
+		registrationPage.typeConfirmPassword(cPassword);
+		registrationPage.subscribeNewsletter(subscribe);
+		registrationPage.checkAgree();
+
+		//Verify Entered User and Password and Proceed
+		registrationPage.verifyEnteredFirstName();
+		registrationPage.verifyEnteredEmail();	
+		registrationPage.verifyEnteredPhoneNumber();
+		registrationPage.verifyEnteredCity();
+		registrationPage.verifyEnteredCountry();	
+		registrationPage.verifyEnteredZone();		
+		registrationPage.clickContinue();		
+		
+		//Verify Registration is Successful...
+		registrationSuccessPage.verifyRegistrationNotSuccessful();
+		
+		//Take Screenshot of success Registration
+		screenShot.captureScreenShot(screenshotFolder + method.getName());
+		logger.log(LogStatus.PASS, "Take Screen Shot of Successful Registration");
+	}	
 	
 	@AfterMethod
 	public void logout() throws InterruptedException {

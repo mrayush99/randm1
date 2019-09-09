@@ -81,6 +81,9 @@ public class UniformRegistrationPage {
 	@FindBy(xpath="//*[@type='submit' and @value='Continue']")	
 	private WebElement submitBtn; 
 	
+	@FindBy(xpath="//*[@class='alert alert-danger']")	
+	private WebElement errorMessage;	
+	
 	public void typeFirstName(String firstName) {
 		this.firstName.clear();
 		this.firstName.sendKeys(firstName);
@@ -147,7 +150,7 @@ public class UniformRegistrationPage {
 		logger.log(LogStatus.PASS, "Select Country");
 	}
 	
-	public void selctZone(String zoneName) {
+	public void selctZone(String zoneName) throws Exception {
 		Select zone = new Select(this.zone);
 		zone.selectByVisibleText(zoneName);
 		logger.log(LogStatus.PASS, "Select Zone Name");
@@ -203,17 +206,17 @@ public class UniformRegistrationPage {
 	
 	public void verifyEnteredCity() throws Exception {
 		String enteredPhone=this.telephone.getAttribute("value");
-		logger.log(LogStatus.PASS, "Entered Phone Number is : " + enteredPhone);
+		logger.log(LogStatus.PASS, "Entered City is : " + enteredPhone);
 	}	
 	
 	public void verifyEnteredCountry() throws Exception {
 		String enteredPhone=this.telephone.getAttribute("value");
-		logger.log(LogStatus.PASS, "Entered Phone Number is : " + enteredPhone);
+		logger.log(LogStatus.PASS, "Entered Country is : " + enteredPhone);
 	}	
 	
 	public void verifyEnteredZone() throws Exception {
 		String enteredPhone=this.telephone.getAttribute("value");
-		logger.log(LogStatus.PASS, "Entered Phone Number is : " + enteredPhone);
+		logger.log(LogStatus.PASS, "Entered Region is : " + enteredPhone);
 	}				
 	
 	public void verifyRegistrationPageLaunched() throws Exception {
