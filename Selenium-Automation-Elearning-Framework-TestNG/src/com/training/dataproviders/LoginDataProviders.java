@@ -35,7 +35,7 @@ public class LoginDataProviders {
 		return result;
 	}
 	
-	@DataProvider(name = "user_account")
+	@DataProvider(name = "dbUserData")
 	public static Object [][] getUniformUserData() {
 
 		List<UserAccountBean> list = new ELearningDAO().getUserAccount(); 
@@ -90,7 +90,7 @@ public class LoginDataProviders {
 	}
 
 	@SuppressWarnings("null")
-	@DataProvider(name = "userRegistrationData")
+	@DataProvider(name = "xlUserData")
 	public static Object[][] getRegistrationData(Method testMethod){
 		// ensure you will have the title as first line in the file 
 		String [] fields = {"First Name", "Last Name", "E-Mail", "Telephone", "fax_num", "company", "Address 1", "Address 2", "City", "Postal Code", "Country", "Region", "Password", "Password Confirm", "subscribe"};
